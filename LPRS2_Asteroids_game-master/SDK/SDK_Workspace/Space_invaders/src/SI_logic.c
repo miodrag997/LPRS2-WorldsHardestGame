@@ -7,6 +7,26 @@
 
 #include "SI_logic.h"
 
+//i = y
+//j = x
+#define left_border 1
+#define top_border 2
+#define endpoint 3
+#define right_border 4
+#define enemy 5
+#define base 6
+#define bottom_border 7
+#define fill 8
+#define cube 9
+#define right_top 10
+#define right_bottom 11
+#define left_bottom 12
+#define left_top 13
+//10-corner bl
+//11-corner bt
+//12-corner rt
+//13-corner rb
+
  int enemy_x[3] = {50,30,40};
  int enemy_y[3] = {40,20,30};
 
@@ -74,7 +94,7 @@ void init_level_one(){
 				level_zero[j][i]=1;
 			}
 			if(j == 18 && i >= 20 && i <= 24){
-				level_zero[j][i]=1; //levi deo gornjeg ugla odzdo gledajuci
+				level_zero[j][i]=1; //levi deo gornjeg ugla ozdo gledajuci
 			}
 
 			if(j == 18 && i >= 36 && i <= 40){
@@ -169,9 +189,11 @@ void enemy_moving_level_zero(int *cube_x, int *cube_y, int *enemy_x, int *enemy_
 
 }
 
+long long i = -1;
+
 
 void enemy_moving_level_one(int *cube_x, int *cube_y, int *enemy_x_one, int *enemy_y_one, int *level_frame_border_one){
-
+	int br=0;
 	if(*level_frame_border_one == 0){
 				if(*enemy_y_one == 21){
 					*level_frame_border_one = 1;
@@ -183,7 +205,13 @@ void enemy_moving_level_one(int *cube_x, int *cube_y, int *enemy_x_one, int *ene
 
 					fails++;
 				}
-				(*enemy_y_one)--;
+				do{
+					br++;
+				}while(br!=1000000);
+				i*=-1;
+				if(i>0){
+					(*enemy_y_one)--;
+				}
 			}else if(*level_frame_border_one == 1){
 				if(*enemy_y_one == 39){
 					*level_frame_border_one = 0;
@@ -195,7 +223,13 @@ void enemy_moving_level_one(int *cube_x, int *cube_y, int *enemy_x_one, int *ene
 
 					fails++;
 				}
-				(*enemy_y_one)++;
+				do{
+					br++;
+								}while(br!=1000000);
+				i*=-1;
+				if(i>0){
+					(*enemy_y_one)++;
+				}
 			}
 
 }
@@ -365,7 +399,7 @@ void enemy_moving_level_two(int *cube_x, int *cube_y, int *enemy_x_two, int *ene
 			*cube_y=30;
 			fails++;
 		}
-		(*enemy_x_two)--;					//dole
+		//(*enemy_x_two)--;					//dole
 	}else if(*level_frame_border_two == 1){
 		if(*enemy_x_two == 21|| *enemy_x_two == 60){
 			*level_frame_border_two = 0;
@@ -377,10 +411,84 @@ void enemy_moving_level_two(int *cube_x, int *cube_y, int *enemy_x_two, int *ene
 
 			fails++;
 		}
-		(*enemy_x_two)++;				//
+		//(*enemy_x_two)++;				//
 	}
 }
+void init_level_three(){
+	int i,j;
+	for(i=0;i<60;i++){
+		for(j=0;j<80;j++){
+			level_zero[j][i]=0;
+			if(j==4 && i>18 && i<42){
+				level_zero[j][i]=left_border;
+			}
+			if(j==20 && i>22 && i<37){
+				level_zero[j][i]=left_border;
+			}
+			if(j==55 && i>18 && i<22){
+				level_zero[j][i]=left_border;
+			}
+			if(j==64 && i>23 && i<42){
+				level_zero[j][i]=left_border;
+			}
+			if(j>5 && j<15 && i==18){
+				level_zero[j][i]=top_border;
+			}
+			if(i==37 && j>17 && j<19){
+				level_zero[j][i]=top_border;
+			}
+			if(i==22 && j>21 && j<54){
+				level_zero[j][i]=top_border;
+			}
+			if(i==18 && j>56 && j<75){
+				level_zero[j][i]=top_border;
+			}
+			if(j==16 && i>18 && i<38){
+				level_zero[j][i]=right_border;
+			}
+			if(j==25 && i>38 && i<42){
+				level_zero[j][i]=right_border;
+			}
+			if(j==60 && i>22 && i<38){
+				level_zero[j][i]=right_border;
+			}
+			if(j==76 && i>18 && i<42){
+				level_zero[j][i]=right_border;
+			}
+			if(j>5 && j<24 && i==42){
+				level_zero[j][i]=bottom_border;
+			}
+			if(i==38 && j>26 && j<59){
+				level_zero[j][i]=bottom_border;
+			}
+			if(i==23 && j>61 && j<63){
+				level_zero[j][i]=bottom_border;
+			}
+			if(i==42 && j>65 && j<75){
+				level_zero[j][i]=bottom_border;
+			}
+			if(i==37 && j==16){
+				level_zero[j][i]=left_bottom;
+			}
+			if(i==37 && j==20){
+				level_zero[j][i]=right_bottom;
+			}
+			if(i==38 && j==25){
+				level_zero[j][i]=left_top;
+			}
+			if(i==22 && j==55){
+				level_zero[j][i]=right_bottom;
+			}
+			if(i==23 && j==60){
+				level_zero[j][i]=left_top;
+			}
+			if(i==23 && j==64){
+				level_zero[j][i]=right_top;
+			}
 
+		}
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////////
 void main_level(){
@@ -443,15 +551,16 @@ void main_level(){
 	clear_graphics_screen(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR);
 
 
-	if(level==0){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		init_level_zero();
-	}
-	else if(level==1){//stavi 1 kasnije
-		init_level_one();
-	}
-	else if(level==2){//2
-		init_level_two();
-	}
+	//if(level==0){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//	init_level_zero();
+	//}
+	//else if(level==1){//stavi 1 kasnije
+	//	init_level_one();
+	//}
+//	else if(level==2){//2
+	//	init_level_two();
+	//}
+	init_level_three();
 
 	u32 frame_cnt = 0;
   	while(1){
