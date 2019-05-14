@@ -54,13 +54,13 @@
 				level_zero[j][i]=7; //bottom
 			}
 			if(j >=11 && j <= 20 && i >= 17 && i <= 45){
-				level_zero[j][i]=6; //draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, base, 'k');
+				level_zero[j][i]=6; //draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, base_bitmap, 'k');
 			}
 			if(j >=20 && j <= 60 && i >= 17 && i <= 45){
 				level_zero[j][i]=8; // inner fill
 			}
 			if(j >= 60 && j <= 69 && i >= 17 && i <= 45){
-				level_zero[j][i]=3; //draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint, 'k');
+				level_zero[j][i]=3; //draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint_bitmap, 'k');
 			}
 		}
 	}
@@ -68,7 +68,7 @@
  }
 
 
-
+/*
 void init_level_one(){
 	int i, j;
 
@@ -156,7 +156,7 @@ void init_level_one(){
 	}
 
 }
-
+*/
 
 
 void enemy_moving_level_zero(int *cube_x, int *cube_y, int *enemy_x, int *enemy_y, int *level_frame_border){
@@ -191,7 +191,7 @@ void enemy_moving_level_zero(int *cube_x, int *cube_y, int *enemy_x, int *enemy_
 
 long long i = -1;
 
-
+/*
 void enemy_moving_level_one(int *cube_x, int *cube_y, int *enemy_x_one, int *enemy_y_one, int *level_frame_border_one){
 	int br=0;
 	if(*level_frame_border_one == 0){
@@ -233,7 +233,7 @@ void enemy_moving_level_one(int *cube_x, int *cube_y, int *enemy_x_one, int *ene
 			}
 
 }
-
+*/
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int friend_x_two[4] = {20,63,16,59};
 int friend_y_two[4] = {13,16,43,46};
@@ -343,7 +343,7 @@ void init_level_two(){
 
 }
 
-void draw_level_two(){
+void draw_level(){
 	int i, j;
 	for(i = 0; i < 60; i++){
 		for(j = 0; j < 80; j++){
@@ -360,13 +360,13 @@ void draw_level_two(){
 				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, border_vertical_bottom, 'b');
 			}
 			if(level_zero[j][i]==9){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, cube, 'p');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, cube_bitmap, 'p');
 			}
 			if(level_zero[j][i]==6){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, base, 'k');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, base_bitmap, 'k');
 			}
 			if(level_zero[j][i]==3){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint, 'k');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint_bitmap, 'k');
 			}
 			if(level_zero[j][i]==10){
 				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, cornerlb, 'l');
@@ -381,7 +381,7 @@ void draw_level_two(){
 				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, cornerrb, 'r');
 			}
 			/*if(level_two[j][i]==8){
-				//draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint, 't');
+				//draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint_bitmap, 't');
 			}*/
 		}
 	}
@@ -414,6 +414,9 @@ void enemy_moving_level_two(int *cube_x, int *cube_y, int *enemy_x_two, int *ene
 		//(*enemy_x_two)++;				//
 	}
 }
+int enemy_three_x[15]={22,59,22,59,22,59,22,59,22,59,22,59,22,59,22};
+int enemy_three_y[15]= {23,24,25,26,27,28,29,30,31,32,33,34,35,36,37};
+
 void init_level_three(){
 	int i,j;
 	for(i=0;i<60;i++){
@@ -485,9 +488,68 @@ void init_level_three(){
 			if(i==23 && j==64){
 				level_zero[j][i]=right_top;
 			}
+			if(j >=5 && j <= 15 && i >= 19 && i <= 41){
+				level_zero[j][i]=base;
+				//draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, base, 'k');
+			}
+			if(j >= 65 && j <= 75 && i >= 19 && i <= 41){
+				level_zero[j][i]=endpoint; //
+				//draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, j, i, endpoint, 'k');
+			}
 
+			if(j >=16 && j <= 24 && i > 37 && i < 42){//61
+				level_zero[j][i]=8; // inner fill
+			}
+			if(j >=21 && j <= 59 && i > 22 && i < 38){//61
+				level_zero[j][i]=8; // inner fill
+			}
+			if(j >=56 && j <= 64 && i > 18 && i < 23){//61
+				level_zero[j][i]=8; // inner fill
+			}
 		}
 	}
+}
+
+void enemy_moving_level_three(int *cube_x, int *cube_y, int *enemy_three_x, int *enemy_three_y, int *level_frame_border_one){
+	int br=0;
+	if(*level_frame_border_one == 0){
+				if(*enemy_three_x == 22){
+					*level_frame_border_one = 1;
+				}
+				erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, *enemy_three_x, *enemy_three_y);
+				if(*cube_x == *enemy_three_x && *cube_y == *enemy_three_y){
+					*cube_x=10;
+					*cube_y=30;
+
+					fails++;
+				}
+				do{
+					br++;
+				}while(br!=1000000);
+				i*=-1;
+				if(i>0){
+					(*enemy_three_x)--;
+				}
+			}else if(*level_frame_border_one == 1){
+				if(*enemy_three_x == 59){
+					*level_frame_border_one = 0;
+				}
+				erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, *enemy_three_x, *enemy_three_y);
+				if(*cube_x == *enemy_three_x && *cube_y == *enemy_three_y){
+					*cube_x=10;
+					*cube_y=30;
+
+					fails++;
+				}
+				do{
+					br++;
+								}while(br!=1000000);
+				i*=-1;
+				if(i>0){
+					(*enemy_three_x)++;
+				}
+			}
+
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -496,21 +558,25 @@ void main_level(){
 	int cube_x;
 	int cube_y;
 	int i=0;
-	int numberOfEnemy;
-	int numberOfFriends;
-	int numberOfStationaryEnemies;
+	int numberOfEnemy = 0;
+	int numberOfFriends = 0;
+	int numberOfStationaryEnemies = 0;
 	// player coordinates
+
+	level = 3;
 	if(level==0){////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		cube_x = 15;
 		cube_y = 30;
 		numberOfEnemy=3;
 		numberOfStationaryEnemies = 0;
+		numberOfFriends=0;
 	}
 	else if(level==1){
 		cube_x = 15;
 		cube_y = 30;
 		numberOfEnemy=39;
 		numberOfStationaryEnemies = 0;
+		numberOfFriends=0;
 	}
 	else if(level==2){
 		cube_x = 40;
@@ -518,6 +584,13 @@ void main_level(){
 		numberOfEnemy=22;
 		numberOfStationaryEnemies = 64;
 		numberOfFriends=4;
+	}
+	else if(level == 3){
+		cube_x = 10;
+		cube_y = 30;
+		numberOfEnemy=15;
+		numberOfStationaryEnemies = 0;
+		numberOfFriends=0;
 	}
 	/* variables */
 	char* str = NULL;
@@ -551,16 +624,18 @@ void main_level(){
 	clear_graphics_screen(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR);
 
 
-	//if(level==0){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//	init_level_zero();
-	//}
+	if(level==0){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		init_level_zero();
+	}
 	//else if(level==1){//stavi 1 kasnije
 	//	init_level_one();
 	//}
-//	else if(level==2){//2
-	//	init_level_two();
-	//}
-	init_level_three();
+	else if(level==2){//2
+		init_level_two();
+	}
+	else if(level==3){
+		init_level_three();
+	}
 
 	u32 frame_cnt = 0;
   	while(1){
@@ -585,7 +660,7 @@ void main_level(){
 
 		// Update gameplay.
 		// Check controls.
-		if(frame_cnt % 2 == 0){
+		if(frame_cnt % 3 == 0){
 			switch(input){
 			case RIGHT_JOY:
 				if(!(level_zero[cube_x-1][cube_y]==1) && (level_zero[cube_x-1][cube_y] != 0)&&(level_zero[cube_x-1][cube_y]!=10)&&(level_zero[cube_x-1][cube_y]!=11)&&(level_zero[cube_x-1][cube_y]!=12)&&(level_zero[cube_x-1][cube_y]!=13)) cube_x--;
@@ -610,18 +685,22 @@ void main_level(){
 					enemy_moving_level_zero(&cube_x, &cube_y, &enemy_x[i], &enemy_y[i], &level_frame_border[i]);
 				}
 			}
-			else if(level==1){
-				for(i = 0; i < numberOfEnemy; i++){
-					enemy_moving_level_one(&cube_x, &cube_y, &enemy_x_one[i], &enemy_y_one[i], &level_frame_border[i]);
-				}
-			}
+			//else if(level==1){
+			//	for(i = 0; i < numberOfEnemy; i++){
+			//		enemy_moving_level_one(&cube_x, &cube_y, &enemy_x_one[i], &enemy_y_one[i], &level_frame_border[i]);
+			//	}
+			//}
 			else if(level==2){
 				for(i = 0; i < numberOfEnemy; i++){
 					enemy_moving_level_two(&cube_x, &cube_y, &enemy_x_two[i], &enemy_y_two[i], &level_frame_border[i]);//////////////////////two
 				}
 
 			}
-
+			else if(level==3){
+				for(i=0;i<numberOfEnemy;i++){
+					enemy_moving_level_three(&cube_x, &cube_y, &enemy_three_x[i], &enemy_three_y[i], &level_frame_border[i]);
+				}
+			}
 		}
 
 		// Drawing.
@@ -633,11 +712,11 @@ void main_level(){
 		}
 
 
-		draw_level_two();
+		draw_level();
 
 		if(level==2){
 			for(i = 0; i < numberOfFriends; i++){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, friend_x_two[i], friend_y_two[i], friend, 'e');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, friend_x_two[i], friend_y_two[i], friend_bitmap, 'e');
 				if(cube_x == friend_x_two[i] && cube_y == friend_y_two[i]){
 					friend_x_two[i]=65+points*2;
 					friend_y_two[i]=2;
@@ -650,30 +729,29 @@ void main_level(){
 		int j=0;
 
 		for(i = 0; i < numberOfStationaryEnemies; i++){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_two_static[i], enemy_y_two_static[i], enemy, 'e');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_two_static[i], enemy_y_two_static[i], enemy_bitmap, 'e');
 		}
 
 		for(i = 0; i < numberOfEnemy; i++){
 			if(level==0){//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x[i], enemy_y[i], enemy, 'e');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x[i], enemy_y[i], enemy_bitmap, 'e');
 				if(cube_x==enemy_x[i] && cube_y==enemy_y[i]){
 					cube_x=15;
-					cube_y=30;
 
 					fails++;
 				}
 			}
-			else if(level==1){
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_one[i], enemy_y_one[i], enemy, 'e');
+			/*else if(level==1){
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_one[i], enemy_y_one[i], enemy_bitmap, 'e');
 				if(cube_x==enemy_x_one[i] && cube_y==enemy_y_one[i]){
 					cube_x=15;
 					cube_y=30;
 					fails++;
 				}
-			}
+			}*/
 			else if(level==2){
 
-				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_two[i], enemy_y_two[i], enemy, 'e');
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_x_two[i], enemy_y_two[i], enemy_bitmap, 'e');
 				if((cube_x==enemy_x_two[i] && cube_y==enemy_y_two[i])){
 
 					for(j=1;j<5;j++){
@@ -697,9 +775,17 @@ void main_level(){
 					fails++;
 				}
 			}
+			else if(level==3){
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_three_x[i], enemy_three_y[i], enemy_bitmap, 'e');
+				if(cube_x==enemy_three_x[i] && cube_y==enemy_three_y[i]){
+					cube_x=10;
+					cube_y=30;
+					fails++;
+				}
+			}
 		}
 
-		draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, cube_x, cube_y, cube, 'p');
+		draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, cube_x, cube_y, cube_bitmap, 'p');
 
 		after_drawing();
 
@@ -708,7 +794,7 @@ void main_level(){
 
   		/* End level */
 
-		if(level==0 || level==1){
+		if(level==0 || level==1 || level==3){
 			if(level_zero[cube_x][cube_y] == 3) {
 				level++;
 				break;
