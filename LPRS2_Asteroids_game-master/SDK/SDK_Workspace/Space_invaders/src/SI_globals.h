@@ -68,10 +68,13 @@ extern Xuint8 fails;
 extern Xuint32 cursor_position;
 extern Xuint8 level_zero[LEVEL_X_SIZE][LEVEL_Y_SIZE];
 extern Xuint8 level_two[LEVEL_X_SIZE][LEVEL_Y_SIZE];
+extern Xuint8 level_1[LEVEL_Y_SIZE][LEVEL_X_SIZE];
+
 extern Xuint32 enemy_bitmap[8][3];
 extern Xuint32 cube_bitmap[8][3];
 extern Xuint32 base_bitmap[8][3];
 extern Xuint32 endpoint_bitmap[8][3];
+extern Xuint32 border_bitmap[8][3];
 
 extern Xuint32 border_vertical_bottom[8][3];
 extern Xuint32 border_vertical_top[8][3];
