@@ -48,6 +48,17 @@ extern struct bullet{
 			bullet_Y,
 			is_Bullet;
 };
+
+extern struct Enemy{
+	unsigned int begin_x;
+	unsigned int begin_y;
+	unsigned int end_x;
+	unsigned int end_y;
+	unsigned int curr_x;
+	unsigned int curr_y;
+	int dir;
+};
+
 /****************************/
 
 /* main variables/maps */
@@ -62,14 +73,13 @@ extern Xuint8 projectiles_map[MAX_PROJECTILES_X][MAX_PROJECTILES_Y];
 
 /****************************/
 
-extern Xuint8 level;
 extern Xuint8 fails;
 
 extern Xuint32 cursor_position;
-extern Xuint8 level_zero[LEVEL_X_SIZE][LEVEL_Y_SIZE];
-extern Xuint8 level_two[LEVEL_X_SIZE][LEVEL_Y_SIZE];
 extern Xuint8 level_1[LEVEL_Y_SIZE][LEVEL_X_SIZE];
 extern Xuint8 level_2[LEVEL_Y_SIZE][LEVEL_X_SIZE];
+
+extern struct Enemy enemy_level1[15];
 
 extern Xuint32 enemy_bitmap[8][3];
 extern Xuint32 cube_bitmap[8][3];

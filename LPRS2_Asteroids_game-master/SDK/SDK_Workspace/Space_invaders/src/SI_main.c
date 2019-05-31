@@ -240,11 +240,10 @@ int main(){																																							//MAIN
 	init_colors();
 	init_interrupt_controller();
 	int j=0;
-	level=0;
 
 	// level looper
-	for(j=0;j<1;j++){
-		main_level();
+	for(j=0;j<2;j++){
+		main_level(j+1);
 	};
 
 	return 0;
