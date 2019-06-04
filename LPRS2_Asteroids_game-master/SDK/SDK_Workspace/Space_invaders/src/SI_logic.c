@@ -57,24 +57,73 @@ void draw_level(Xuint8 *current_level){
 	}
 }
 
-void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, int cube_y){
+
+void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, int cube_y, Xuint8 *curr_level){
 	int i;
-	for (i = 0; i < numOfEnemy; i++){
-		erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
-		if(enemy_curr_level[i].dir == 1){
-			enemy_curr_level[i].curr_x += enemy_curr_level[i].dir;
-			if (enemy_curr_level[i].curr_x == enemy_curr_level[i].end_x){
-				enemy_curr_level[i].dir = -1;
+	if(enemy_curr_level[0].begin_x == enemy_curr_level[0].end_x && enemy_curr_level[0].begin_y == enemy_curr_level[0].end_y){
+		for (i = 0; i < numOfEnemy; i++){
+			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
+			if(enemy_curr_level[i].dir_x == 1){
+				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
+				if (*(curr_level + enemy_curr_level[i].curr_y*80 + enemy_curr_level[i].curr_x + 1) == 1){
+					enemy_curr_level[i].dir_x = 0;
+					enemy_curr_level[i].dir_y = 1;
+				}
+			}else if (enemy_curr_level[i].dir_x == -1){
+				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
+				if (*(curr_level + enemy_curr_level[i].curr_y*80 + enemy_curr_level[i].curr_x - 1) == 1){
+					enemy_curr_level[i].dir_x = 0;
+					enemy_curr_level[i].dir_y = -1;
+				}
+
+			}else if (enemy_curr_level[i].dir_y == 1){
+				enemy_curr_level[i].curr_y += enemy_curr_level[i].dir_y;
+				if (*(curr_level + (enemy_curr_level[i].curr_y+1)*80 + enemy_curr_level[i].curr_x) == 1){
+					enemy_curr_level[i].dir_x = -1;
+					enemy_curr_level[i].dir_y = 0;
+				}
+			}else if (enemy_curr_level[i].dir_y == -1){
+				enemy_curr_level[i].curr_y += enemy_curr_level[i].dir_y;
+				if (*(curr_level + (enemy_curr_level[i].curr_y-1)*80 + enemy_curr_level[i].curr_x) == 1){
+					enemy_curr_level[i].dir_x = 1;
+					enemy_curr_level[i].dir_y = 0;
+				}
 			}
-		}else{
-			enemy_curr_level[i].curr_x += enemy_curr_level[i].dir;
-			if (enemy_curr_level[i].curr_x == enemy_curr_level[i].begin_x){
-				enemy_curr_level[i].dir = 1;
+			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+				fails++;
 			}
 		}
-		if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
-			fails++;
+	}else{
+
+		for (i = 0; i < numOfEnemy; i++){
+			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
+			if(enemy_curr_level[i].dir_x == 1){
+				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
+				if (enemy_curr_level[i].curr_x == enemy_curr_level[i].end_x){
+					enemy_curr_level[i].dir_x = -1;
+				}
+			}else if (enemy_curr_level[i].dir_x == -1){
+				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
+				if (enemy_curr_level[i].curr_x == enemy_curr_level[i].begin_x){
+					enemy_curr_level[i].dir_x = 1;
+				}
+
+			}else if (enemy_curr_level[i].dir_y == 1){
+				enemy_curr_level[i].curr_y += enemy_curr_level[i].dir_y;
+				if (enemy_curr_level[i].curr_y == enemy_curr_level[i].end_y){
+					enemy_curr_level[i].dir_y = -1;
+				}
+			}else if (enemy_curr_level[i].dir_y == -1){
+				enemy_curr_level[i].curr_y += enemy_curr_level[i].dir_y;
+				if(enemy_curr_level[i].curr_y == enemy_curr_level[i].begin_y){
+					enemy_curr_level[i].dir_y = 1;
+				}
+			}
+			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+				fails++;
+			}
 		}
+
 	}
 }
 
@@ -93,7 +142,7 @@ void main_level(int level){
 	int start_cube_x, start_cube_y;
 
 	// player coordinates
-	//level = 1;
+	level = 4;
 
 
 	if(level==1){////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,24 +157,32 @@ void main_level(int level){
 	else if(level==2){
 		cube_x = start_cube_x = 15;
 		cube_y = start_cube_y = 22;
-		numberOfEnemy=0;
+		numberOfEnemy=37;
 		numberOfStationaryEnemies = 0;
 		numberOfFriends=0;
 		current_level = &level_2[0][0];
+		curr_enemy_level = enemy_level2;
 	}
 	else if(level == 3){
-		cube_x = 10;
-		cube_y = 30;
-		numberOfEnemy=15;
+		cube_x = start_cube_x = 36;
+		cube_y = start_cube_y = 30;
+		numberOfEnemy=38;
 		numberOfStationaryEnemies = 0;
 		numberOfFriends=0;
+		current_level = &level_3[0][0];
+		curr_enemy_level = enemy_level3;
+	}
+	else if(level == 4){
+		cube_x = start_cube_x = 10;
+		cube_y = start_cube_y = 18;
+		numberOfEnemy=0;
+		numberOfStationaryEnemies = 0;
+		numberOfFriends=0;
+		current_level = &level_4[0][0];
+		curr_enemy_level = enemy_level1;
 	}
 	/* variables */
 	char* str = NULL;
-	int level_frame_border[numberOfEnemy];
-	for(i=0;i<numberOfEnemy;i++){
-		level_frame_border[i]=0;
-	}
 
 
 
@@ -200,7 +257,7 @@ void main_level(int level){
 			}
 
 			// TODO Animations.
-			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y);
+			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y, current_level);
 			if(fails != fails_old){
 				fails_old = fails;
 				cube_x = start_cube_x;
@@ -208,24 +265,31 @@ void main_level(int level){
 			}
 
 		}
+		if (level == 2){
 
-		if (*(current_level + cube_y*80 + cube_x) == 5){
-							*(current_level + cube_y*80 + cube_x) = 0;
+			if (*(current_level + cube_y*80 + cube_x) == 5){
+				*(current_level + cube_y*80 + cube_x) = 0;
 
-							if(*(current_level + 31*80 + 28) == 6){
-								erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 28, 30);
-								erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 28, 31);
-								*(current_level + 30*80 + 28) = 0;
-								*(current_level + 31*80 + 28) = 0;
-							}else{
-								erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 46, 33);
-								erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 46, 34);
-								*(current_level + 33*80 + 46) = 0;
-								*(current_level + 34*80 + 46) = 0;
-							}
+				if(*(current_level + 31*80 + 28) == 6){
+					erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 28, 30);
+					erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 28, 31);
+					*(current_level + 30*80 + 28) = 0;
+					*(current_level + 31*80 + 28) = 0;
+				}else{
+					erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 46, 33);
+					erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 46, 34);
+					*(current_level + 33*80 + 46) = 0;
+					*(current_level + 34*80 + 46) = 0;
+				}
 
-						}
-
+			}
+		}else if(level == 3){
+			if (*(current_level + cube_y*80 + cube_x) == 5){
+				*(current_level + cube_y*80 + cube_x) = 0;
+				erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, 41, 31);
+				*(current_level + 31*80 + 41) = 0;
+			}
+		}
 		// Drawing.
 
   		before_drawing();
@@ -245,6 +309,13 @@ void main_level(int level){
 			 if(level==1){
 				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_level1[i].curr_x, enemy_level1[i].curr_y, enemy_bitmap, 'e');
 			}
+			 if(level==2){
+				draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_level2[i].curr_x, enemy_level2[i].curr_y, enemy_bitmap, 'e');
+			}
+			 if(level==3){
+			 	draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_level3[i].curr_x, enemy_level3[i].curr_y, enemy_bitmap, 'e');
+			 }
+
 		}
 
 		draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, cube_x, cube_y, cube_bitmap, 'k');
@@ -256,7 +327,7 @@ void main_level(int level){
 
   		/* End level */
 
-		if(level==1 || level == 2){
+		if(level==1 || level == 2 || level == 3){
 			if(*(current_level + cube_y*80 + cube_x) == 3) {
 				level++;
 				break;

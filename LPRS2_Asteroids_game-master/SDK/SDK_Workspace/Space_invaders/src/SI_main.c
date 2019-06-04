@@ -242,7 +242,7 @@ int main(){																																							//MAIN
 	int j=0;
 
 	// level looper
-	for(j=0;j<2;j++){
+	for(j=0;j<3;j++){
 		main_level(j+1);
 	};
 

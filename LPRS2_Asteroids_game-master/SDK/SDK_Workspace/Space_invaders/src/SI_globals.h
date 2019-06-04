@@ -56,7 +56,8 @@ extern struct Enemy{
 	unsigned int end_y;
 	unsigned int curr_x;
 	unsigned int curr_y;
-	int dir;
+	int dir_x;
+	int dir_y;
 };
 
 /****************************/
@@ -76,10 +77,15 @@ extern Xuint8 projectiles_map[MAX_PROJECTILES_X][MAX_PROJECTILES_Y];
 extern Xuint8 fails;
 
 extern Xuint32 cursor_position;
+extern Xuint8 level;
 extern Xuint8 level_1[LEVEL_Y_SIZE][LEVEL_X_SIZE];
 extern Xuint8 level_2[LEVEL_Y_SIZE][LEVEL_X_SIZE];
+extern Xuint8 level_3[LEVEL_Y_SIZE][LEVEL_X_SIZE];
+extern Xuint8 level_4[LEVEL_Y_SIZE][LEVEL_X_SIZE];
 
 extern struct Enemy enemy_level1[15];
+extern struct Enemy enemy_level2[37];
+extern struct Enemy enemy_level3[38];
 
 extern Xuint32 enemy_bitmap[8][3];
 extern Xuint32 cube_bitmap[8][3];
