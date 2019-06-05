@@ -211,6 +211,7 @@ void main_level(int level){
 	u32 frame_cnt = 0;
   	while(1){
   		// PRINT FAILS
+  		before_drawing();
 		set_cursor(773);
 		num_to_str(str, fails, num_len(fails));
 		print_string(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, str, strlen(str));
@@ -292,7 +293,7 @@ void main_level(int level){
 		}
 		// Drawing.
 
-  		before_drawing();
+
 
 		if(cube_x != old_cube_x || cube_y != old_cube_y){
 			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, old_cube_x, old_cube_y);
