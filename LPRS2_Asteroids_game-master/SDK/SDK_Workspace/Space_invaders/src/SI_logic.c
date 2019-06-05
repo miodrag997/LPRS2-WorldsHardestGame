@@ -62,6 +62,11 @@ void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, in
 	int i;
 	if(enemy_curr_level[0].begin_x == enemy_curr_level[0].end_x && enemy_curr_level[0].begin_y == enemy_curr_level[0].end_y){
 		for (i = 0; i < numOfEnemy; i++){
+
+			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+			fails++;
+			}
+
 			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
 			if(enemy_curr_level[i].dir_x == 1){
 				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
@@ -96,6 +101,9 @@ void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, in
 	}else{
 
 		for (i = 0; i < numOfEnemy; i++){
+			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+				fails++;
+				}
 			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
 			if(enemy_curr_level[i].dir_x == 1){
 				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
@@ -184,8 +192,6 @@ void main_level(int level){
 	/* variables */
 	char* str = NULL;
 
-
-
 	// PRINT LEVEL
 	set_cursor(666);
 	clear_text_screen(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR);
@@ -210,6 +216,7 @@ void main_level(int level){
 
 	u32 frame_cnt = 0;
   	while(1){
+
   		// PRINT FAILS
   		before_drawing();
 		set_cursor(773);
@@ -233,23 +240,18 @@ void main_level(int level){
 		if(frame_cnt % 3 == 0){
 			switch(input){
 			case RIGHT_JOY:
-				//if(!(level_1[cube_x-1][cube_y]==1) && (level_1[cube_x-1][cube_y] != 0)&&(level_1[cube_x-1][cube_y]!=10)&&(level_1[cube_x-1][cube_y]!=11)&&(level_1[cube_x-1][cube_y]!=12)&&(level_1[cube_x-1][cube_y]!=13))
 				if(*(current_level + cube_y*80 + cube_x +1)!=1 && *(current_level + cube_y*80 + cube_x +1)!=6)
 					cube_x++;
 				break;
 			case LEFT_JOY:
-				//if(!((level_1)[cube_x+1][cube_y]==1) && (level_1[cube_x+1][cube_y] != 0)&&(level_1[cube_x+1][cube_y]!=10)&&(level_1[cube_x+1][cube_y]!=11)&&(level_1[cube_x+1][cube_y]!=12)&&(level_1[cube_x+1][cube_y]!=13))
-
 				if(*(current_level + cube_y*80 + cube_x - 1)!=1 && *(current_level + cube_y*80 + cube_x -1)!=6)
 					cube_x--;
 				break;
 			case UP_JOY:
-			//	if(!((level_1)[cube_x][cube_y-1]==1) && (level_1[cube_x][cube_y-1] != 0)&&(level_1[cube_x][cube_y-1]!=10)&&(level_1[cube_x][cube_y-1]!=11)&&(level_1[cube_x][cube_y-1]!=12)&&(level_1[cube_x][cube_y-1]!=13))
 				if(*(current_level + (cube_y+1)*80 + cube_x)!=1 && *(current_level + (cube_y+1)*80 + cube_x)!=6)
 					cube_y++;
 				break;
 			case DOWN_JOY:
-			//	if(!((level_1)[cube_x][cube_y+1]==1) && (level_1[cube_x][cube_y+1] != 0)&&(level_1[cube_x][cube_y+1]!=10)&&(level_1[cube_x][cube_y+1]!=11)&&(level_1[cube_x][cube_y+1]!=12)&&(level_1[cube_x][cube_y+1]!=13))
 				if(*(current_level + (cube_y-1)*80 + cube_x)!=1 && *(current_level + (cube_y-1)*80 + cube_x)!=6)
 					cube_y--;
 				break;
@@ -268,7 +270,7 @@ void main_level(int level){
 		}
 		if (level == 2){
 
-			if (*(current_level + cube_y*80 + cube_x) == 5){
+			if (*(current_level + cube_y*80 + cube_x) == 5 || *(current_level + cube_y*80 + cube_x) == 7){
 				*(current_level + cube_y*80 + cube_x) = 0;
 
 				if(*(current_level + 31*80 + 28) == 6){
