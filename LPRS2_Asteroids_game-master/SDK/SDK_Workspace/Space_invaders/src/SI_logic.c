@@ -58,16 +58,16 @@ void draw_level(Xuint8 *current_level){
 }
 
 
-void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, int cube_y, Xuint8 *curr_level){
+void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, int cube_y, int cube_x_old, int cube_y_old, Xuint8 *curr_level){
 	int i;
 	if(enemy_curr_level[0].begin_x == enemy_curr_level[0].end_x && enemy_curr_level[0].begin_y == enemy_curr_level[0].end_y){
 		for (i = 0; i < numOfEnemy; i++){
-
+			int t = 0;
 			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
-			fails++;
+				t++;
 			}
-
 			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
+			
 			if(enemy_curr_level[i].dir_x == 1){
 				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
 				if (*(curr_level + enemy_curr_level[i].curr_y*80 + enemy_curr_level[i].curr_x + 1) == 1){
@@ -94,17 +94,23 @@ void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, in
 					enemy_curr_level[i].dir_y = 0;
 				}
 			}
+			
 			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+				fails++;
+			}
+			if(enemy_curr_level[i].curr_x == cube_x_old && enemy_curr_level[i].curr_y == cube_y_old && t == 1){
 				fails++;
 			}
 		}
 	}else{
 
 		for (i = 0; i < numOfEnemy; i++){
+			int t = 0;
 			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
-				fails++;
-				}
+				t++;
+			}
 			erase_square(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_curr_level[i].curr_x, enemy_curr_level[i].curr_y);
+			
 			if(enemy_curr_level[i].dir_x == 1){
 				enemy_curr_level[i].curr_x += enemy_curr_level[i].dir_x;
 				if (enemy_curr_level[i].curr_x == enemy_curr_level[i].end_x){
@@ -127,7 +133,11 @@ void enemy_moving(struct Enemy *enemy_curr_level, int numOfEnemy, int cube_x, in
 					enemy_curr_level[i].dir_y = 1;
 				}
 			}
+			
 			if(enemy_curr_level[i].curr_x == cube_x && enemy_curr_level[i].curr_y == cube_y){
+				fails++;
+			}
+			if(enemy_curr_level[i].curr_x == cube_x_old && enemy_curr_level[i].curr_y == cube_y_old && t == 1){
 				fails++;
 			}
 		}
@@ -260,7 +270,7 @@ void main_level(int level){
 			}
 
 			// TODO Animations.
-			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y, current_level);
+			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y, cube_x_old, cube_y_old current_level);
 			if(fails != fails_old){
 				fails_old = fails;
 				cube_x = start_cube_x;
