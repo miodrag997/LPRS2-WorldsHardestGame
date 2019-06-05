@@ -86,7 +86,7 @@ extern Xuint8 level_4[LEVEL_Y_SIZE][LEVEL_X_SIZE];
 extern struct Enemy enemy_level1[15];
 extern struct Enemy enemy_level2[37];
 extern struct Enemy enemy_level3[38];
-
+extern struct Enemy enemy_level4[62];
 extern Xuint32 enemy_bitmap[8][3];
 extern Xuint32 cube_bitmap[8][3];
 extern Xuint32 base_bitmap[8][3];

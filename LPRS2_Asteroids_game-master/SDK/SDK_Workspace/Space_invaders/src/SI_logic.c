@@ -142,7 +142,7 @@ void main_level(int level){
 	int start_cube_x, start_cube_y;
 
 	// player coordinates
-	level = 4;
+	//level = 4;
 
 
 	if(level==1){////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,11 +175,11 @@ void main_level(int level){
 	else if(level == 4){
 		cube_x = start_cube_x = 10;
 		cube_y = start_cube_y = 18;
-		numberOfEnemy=0;
+		numberOfEnemy=62;
 		numberOfStationaryEnemies = 0;
 		numberOfFriends=0;
 		current_level = &level_4[0][0];
-		curr_enemy_level = enemy_level1;
+		curr_enemy_level = enemy_level4;
 	}
 	/* variables */
 	char* str = NULL;
@@ -315,6 +315,10 @@ void main_level(int level){
 			 if(level==3){
 			 	draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_level3[i].curr_x, enemy_level3[i].curr_y, enemy_bitmap, 'e');
 			 }
+			 if(level==4){
+				 draw_bitmap(XPAR_VGA_PERIPH_MEM_0_S_AXI_MEM0_BASEADDR, enemy_level4[i].curr_x, enemy_level4[i].curr_y, enemy_bitmap, 'e');
+
+			 }
 
 		}
 
@@ -327,7 +331,7 @@ void main_level(int level){
 
   		/* End level */
 
-		if(level==1 || level == 2 || level == 3){
+		if(level==1 || level == 2 || level == 3 || level==4){
 			if(*(current_level + cube_y*80 + cube_x) == 3) {
 				level++;
 				break;
