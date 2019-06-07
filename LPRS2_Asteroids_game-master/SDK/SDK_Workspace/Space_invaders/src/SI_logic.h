@@ -14,7 +14,7 @@
 #include "SI_interrupt.h"
 
 void draw_level(Xuint8 *);
-void enemy_moving(struct Enemy *, int, int, int, int, int Xuint8 *);
+void enemy_moving(struct Enemy *, int, int, int, int, int, Xuint8 *);
 void enemy_moving_level_zero(int *cube_x, int *cube_y, int *enemy_x, int *enemy_y, int *level_frame_border);
 void draw_level_one();
 void main_level_zero();

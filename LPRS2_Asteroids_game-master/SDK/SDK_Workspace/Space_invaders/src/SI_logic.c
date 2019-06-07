@@ -270,7 +270,7 @@ void main_level(int level){
 			}
 
 			// TODO Animations.
-			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y, cube_x_old, cube_y_old current_level);
+			enemy_moving(curr_enemy_level, numberOfEnemy, cube_x, cube_y,old_cube_x ,old_cube_y , current_level);
 			if(fails != fails_old){
 				fails_old = fails;
 				cube_x = start_cube_x;
